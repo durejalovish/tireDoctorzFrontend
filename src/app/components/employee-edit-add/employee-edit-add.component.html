@@ -1,0 +1,99 @@
+<div mat-dialog-title class="text-center">
+    <h1 color="primary">
+      {{data ? 'Update Tires Form':'Add Tires Form'}}
+    </h1>
+   
+</div>
+<form [formGroup]="tireForm" (ngSubmit)="onFormSubmit()" autocomplete="false" novalidate #formDir="ngForm">
+    <div mat-dialog-content>
+        <div>
+          <div class="col-8">
+            <div class="form-group">
+              <label style="margin-top: 10px; font-size: 18px;">Select Brand name</label>
+              <select  (change)="typeChange($event)"  formControlName="brandName" style="margin: 10px; height: 32px;width: 120px; margin-top: 10px;">
+                <option *ngFor="let option of brandList" [value]="option.brandName">
+                  {{option.brandName}}
+                </option>
+              </select>
+              <div
+                *ngIf="tireForm.controls.brandName.invalid && (tireForm.controls.brandName.dirty || tireForm.controls.brandName.touched) && formDir.submitted">
+                <span class="text-danger"
+                  *ngIf="tireForm.controls.brandName.errors.required">
+                  Please enter brand name.
+                </span>
+
+              </div>
+            </div>
+          </div>
+            <div class="col-8"  >
+                <div class="form-group">
+                    <label style="margin-top: 10px; font-size: 18px;">Enter Size</label>
+                  <input class="form-control" type="text" matInput placeholder="Size" formControlName="size" style="margin-top: 10px;"
+                    maxlength="40" />
+                  <div
+                    *ngIf="tireForm.controls.size.invalid && (tireForm.controls.size.dirty || tireForm.controls.size.touched) && formDir.submitted">
+                    <span class="text-danger"
+                      *ngIf="tireForm.controls.size.errors.required">
+                      Please enter Size.
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+              <br/>
+              <div class="col-8"  >
+                <div class="form-group">
+                    <label style="margin-top: 10px; font-size: 18px;">Enter Price</label>
+                  <input class="form-control" type="number" matInput placeholder="Price" formControlName="price" style="margin-top: 10px;"
+                    maxlength="40" />
+                    <div
+                    *ngIf="tireForm.controls.price.invalid && (tireForm.controls.price.dirty || tireForm.controls.price.touched) && formDir.submitted">
+                    <span class="text-danger"
+                      *ngIf="tireForm.controls.price.errors.required">
+                      Please enter Price.
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+              <br/>
+              <div class="col-8"  >
+                <div class="form-group">
+                    <label style="margin-top: 10px; font-size: 18px;">Enter Quantity</label>
+                  <input class="form-control" type="number" matInput placeholder="Quantity" formControlName="quantity" style="margin-top: 10px;"
+                    maxlength="40" />
+                  <div
+                    *ngIf="tireForm.controls.quantity.invalid && (tireForm.controls.quantity.dirty || tireForm.controls.quantity.touched) && formDir.submitted">
+                    <span class="text-danger"
+                      *ngIf="tireForm.controls.quantity.errors.required">
+                      Please enter Quantity.
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+              <br/>
+              <div class="col-8">
+                <div class="form-group">
+                  <label style="margin-top: 10px; font-size: 18px;">Select Pattern</label>
+                  <select  (change)="typeChange($event)"  formControlName="pattern" style="margin: 10px; height: 32px;width: 120px; margin-top: 10px;">
+                    <option value="Snow">Snow Tires</option>
+                    <option value="AllSeason">All Season</option>
+                  </select>
+                  <div
+                    *ngIf="tireForm.controls.pattern.invalid && (tireForm.controls.pattern.dirty || tireForm.controls.pattern.touched) && formDir.submitted">
+                    <span class="text-danger"
+                      *ngIf="tireForm.controls.pattern.errors.required">
+                      Please enter pattern type.
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="d-flex action-btn">
+        <button mat-raised-button type="button" [mat-dialog-close]="false ">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data ? 'Update':'Save'}}</button>
+    </div>
+</form>

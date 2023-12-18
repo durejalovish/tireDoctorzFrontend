@@ -1,0 +1,38 @@
+<div mat-dialog-title class="text-center">
+  <h1 color="primary">
+    {{data ? 'Update Brand Form':'Add Brand Form'}}
+  </h1>
+</div>
+<form [formGroup]="brandForm" (ngSubmit)="onFormSubmit()" autocomplete="false" novalidate #formDir="ngForm">
+  <div mat-dialog-content>
+      <div>
+          <div class="col-8"  >
+              <div class="form-group">
+                  <label style="margin-top: 10px; font-size: 18px;">Enter Brand name</label>
+                <input class="form-control" type="text" matInput placeholder="Brand" formControlName="brandName" style="margin-top: 10px;"
+                  maxlength="40" />
+                <div
+                  *ngIf="brandForm.controls.brandName.invalid && (brandForm.controls.brandName.dirty || brandForm.controls.brandName.touched) && formDir.submitted">
+                  <span class="text-danger"
+                    *ngIf="brandForm.controls.brandName.errors.required">
+                    Please enter Brand.
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <br/>
+            <div class="col-8"  >
+              <div class="form-group">
+                  <label style="margin-top: 10px; font-size: 18px;">Enter Description</label>
+                <input class="form-control" type="text" matInput placeholder="Decription" formControlName="description" style="margin-top: 10px;"
+                  maxlength="40" />
+              </div>
+            </div>
+      </div>
+  </div>
+  <div mat-dialog-actions class="d-flex action-btn">
+      <button mat-raised-button type="button" [mat-dialog-close]="false ">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">{{data ? 'Update':'Save'}}</button>
+  </div>
+</form>
