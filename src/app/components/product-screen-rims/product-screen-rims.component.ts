@@ -17,11 +17,10 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveF
 import { ActivatedRoute, Router } from '@angular/router';
 import {RouterModule} from '@angular/router';
 
-
 @Component({
-  selector: 'app-product-listing',
-  templateUrl: './product-listing.component.html',
-  styleUrls: ['./product-listing.component.css'],
+  selector: 'app-product-screen-rims',
+  templateUrl: './product-screen-rims.component.html',
+  styleUrls: ['./product-screen-rims.component.css'],
   imports: [
     RouterModule,
     CommonModule,
@@ -42,7 +41,8 @@ import {RouterModule} from '@angular/router';
   ],
   standalone: true,
 })
-export class ProductListingComponent {
+export class ProductScreenRimsComponent {
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   productListing: any = [];
@@ -61,29 +61,15 @@ export class ProductListingComponent {
   ) {}
 
   ngOnInit(): void {
-     this.route.params.subscribe(params => {
-      console.log("params", params);
-      this.id = params['userId'];
-    })
-    // let productData:any = localStorage.getItem("productListing");
-    // console.log("productData", productData);
-    // if(productData?.length !== 0 && productData !==null){
-    //   this.dataSource = new MatTableDataSource(productData);
-    //     this.dataSource.sort = this.sort;
-    //     this.dataSource.paginator = this.paginator;
-    // }else{
-      this.getTiresList();
-    // }
-    
-    
+      this.getRimsList();
   }
 
   routeWithoutTaxInvoice(): void {
-    this.router.navigateByUrl('withoutTax', { state: {items: this.productListing }});
+    this.router.navigateByUrl('withoutTaxRims', { state: {items: this.productListing }});
   }
 
   routeToTaxInvoiced(): void {
-    this.router.navigateByUrl('checkout', { state: {items: this.productListing }});
+    this.router.navigateByUrl('taxedRims', { state: {items: this.productListing }});
   }
 
   displayedColumns: string[] = [
@@ -107,8 +93,8 @@ export class ProductListingComponent {
     }
   }
 
-  getTiresList(): void {
-     this.employeeService.getTiresDetails().subscribe({
+  getRimsList(): void {
+     this.employeeService.getAllRims().subscribe({
        next: (res) => {
        this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.sort = this.sort;
@@ -144,7 +130,7 @@ export class ProductListingComponent {
     dialogRef.afterClosed().subscribe({
       next: (value) => {
         if (value) {
-          this.getTiresList();
+          this.getRimsList();
         }
       },
     });

@@ -6,13 +6,12 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { EmployeeEditAddComponent } from '../employee-edit-add/employee-edit-add.component';
 import { CoreService } from 'src/app/core/core.service';
 
-
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  selector: 'app-tax-invoice-rims',
+  templateUrl: './tax-invoice-rims.component.html',
+  styleUrls: ['./tax-invoice-rims.component.css']
 })
-export class CheckoutComponent {
+export class TaxInvoiceRimsComponent {
   // getTotalAmount: 550;
   customerName = "";
   address:"";
@@ -29,7 +28,7 @@ export class CheckoutComponent {
   productListing: any = [];
   constructor(private location:Location, 
     private employeeService: EmployeeService,
-    private router: Router,
+    public router:Router,
     private snackbar: CoreService,) {
   }
   taxRate: number = 0.13; // Example GST rate (5%)
@@ -85,7 +84,7 @@ export class CheckoutComponent {
       element.quantity = element.quantity - element.number_of_items;
       console.log("element", element);
       this.employeeService
-      .updateTires(element)
+      .updateRims(element)
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);
@@ -98,3 +97,4 @@ export class CheckoutComponent {
     })
     };
 }
+

@@ -1,0 +1,96 @@
+<br />
+<div>
+<div style="margin-left: auto; margin-right: auto; width: 44%;">
+  <h3 class="setHeight">Enter Customer name</h3>
+  <input type="text" (change)="onNameChange($event)" class="setHeight">
+  <br/>
+  <h3 class="setHeight" style="margin-top: 10px;">Address</h3>
+  <input type="text" (change)="onAddressChange($event)" class="setHeight">
+  <br/>
+  <h3 class="setHeight" style="margin-top: 10px;">Phone Number</h3>
+  <input type="text" (change)="onPhoneChange($event)" class="setHeight">
+  <br/>
+  <h3 class="setHeight" style="margin-top: 10px;">Additional Message</h3>
+  <input type="text" (change)="onMessageChange($event)" class="setHeight">
+</div>
+
+<div id="invoice-container" class="invoice-container">
+    <div class="invoice-header">
+      <div style="font-size: 20px;"><b>Tire Doctorz</b></div>
+      <br/>
+      <div class="setHeight">5484 Tomken Rd Unit #30</div>
+      <div class="setHeight">Mississauga, ON L4W 2Z6</div>
+      <div class="setHeight">+1 (437) 231-6358</div>
+      <div class="setHeight">info@tiredoctorz.com</div>
+      <div class="setHeight">HST (ON) Registration No:</div>
+      <div class="setHeight">716917943RT0001</div>
+    </div>
+    <div class="invoice-header">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-4" style="width: 50%;float: left;">
+            <div>Customer Name: {{ customerName}}</div>
+            <div>{{ address}}</div>
+            <div>{{ phoneNumber }}</div>
+            <div>{{ addionalMessage }}</div>
+          </div>
+          <div class="col-md-4">
+            <div style="display: flex;flex-direction: row-reverse;">Invoice Number: {{ invoiceData.invoiceNumber }}</div>
+            <div style="display: flex;flex-direction: row-reverse;" >Date: {{currentDate | date:'yyyy-MM-dd'}}</div>
+          </div>
+          
+        </div>
+          
+    </div>
+    
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Brand</th>
+          <th>Number of Items</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of productListing.items">
+          <td>{{ item.size }}</td>
+          <td>{{item.brandName}}</td>
+          <td>{{ item.number_of_items }}</td>
+          <td>{{ item.price }}</td>
+          <td>${{ item.number_of_items * item.price }}</td>
+        </tr>
+        <tr>
+          <td>O.T.S($4.50)</td>
+          <td></td>
+          <td>{{totalItems}}</td>
+          <td>4.50</td>
+          <td>${{ 4.50 * totalItems}} </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="invoice-total">
+      <div>Subtotal: {{ getSubtotal() | currency:'CAD':'symbol':'1.2-2' }}</div>
+      <div>Tax ({{ (taxRate * 100) + '%' }}): {{ getTax() | currency:'CAD':'symbol':'1.2-2' }}</div>
+      <div>Total Amount: {{ getTotalAmount() | currency:'CAD':'symbol':'1.2-2' }}</div>
+    </div>
+    
+    <div style="margin-top: 225px;">
+      <div><b>TERMS & CONDITIONS</b></div>
+      <div>1. No returns/exchange, if mounted.</div>
+      <div>2. 1 year manufacture warranty, road hazard is not included.</div>
+      <div>4. Physical or any damage on sidewall will not be covered.</div>
+      <div>5. Please check your lock key after getting your car back from service. </div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-12">
+      <div class="col-md-4" style="margin-left: auto; margin-right: auto; width: 44%;">
+        <button (click)="generatePDF()">Generate PDF</button>
+      </div>
+    </div>  
+  </div>
+  
+</div>

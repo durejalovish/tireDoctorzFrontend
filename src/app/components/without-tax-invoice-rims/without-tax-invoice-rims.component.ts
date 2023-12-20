@@ -6,21 +6,19 @@ import { EmployeeService } from 'src/app/services/employee.service';
 import { EmployeeEditAddComponent } from '../employee-edit-add/employee-edit-add.component';
 import { CoreService } from 'src/app/core/core.service';
 
-
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  selector: 'app-without-tax-invoice-rims',
+  templateUrl: './without-tax-invoice-rims.component.html',
+  styleUrls: ['./without-tax-invoice-rims.component.css']
 })
-export class CheckoutComponent {
+export class WithoutTaxInvoiceRimsComponent {
+
   // getTotalAmount: 550;
   customerName = "";
   address:"";
   phoneNumber = "";
-  addionalMessage = "";
-  ots = 4.5;
-  totalItems=0;
   currentDate = new Date();
+  addionalMessage = "";
   invoiceData = {
     invoiceNumber: 'INV-001',
     date: '2023-01-01',
@@ -29,20 +27,13 @@ export class CheckoutComponent {
   productListing: any = [];
   constructor(private location:Location, 
     private employeeService: EmployeeService,
-    private router: Router,
+    public router: Router,
     private snackbar: CoreService,) {
   }
   taxRate: number = 0.13; // Example GST rate (5%)
 
   getSubtotal(): number {
-    let total =  this.productListing.items.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
-    let subTotal = total + this.getOTS();
-    return subTotal;
-  }
-
-  getOTS(){
-    this.totalItems =  this.productListing.items.reduce((subtotal:any, item:any) => subtotal + item.number_of_items, 0);
-    return this.totalItems * 4.5;
+    return this.productListing.items.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
   }
 
   getTax(): number {
@@ -75,7 +66,7 @@ export class CheckoutComponent {
   onPhoneChange(event: any){
     this.phoneNumber = event.target.value;
   }
-  
+
   onMessageChange(event: any){
     this.addionalMessage = event.target.value;
   }
@@ -85,7 +76,7 @@ export class CheckoutComponent {
       element.quantity = element.quantity - element.number_of_items;
       console.log("element", element);
       this.employeeService
-      .updateTires(element)
+      .updateRims(element)
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);

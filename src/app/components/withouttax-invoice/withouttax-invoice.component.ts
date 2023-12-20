@@ -27,6 +27,7 @@ export class WithouttaxInvoiceComponent {
   productListing: any = [];
   constructor(private location:Location, 
     private employeeService: EmployeeService,
+    public router:Router,
     private snackbar: CoreService,) {
   }
   taxRate: number = 0.13; // Example GST rate (5%)
@@ -79,6 +80,7 @@ export class WithouttaxInvoiceComponent {
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);
+          this.router.navigateByUrl('invoices');
         },
         error: (err) => {
           console.log(err);
