@@ -65,7 +65,7 @@ export class RimsListingComponent {
     }
   
     displayedColumns: string[] = [
-      'id',
+      'brandName',
       'size',
       'pattern',
       'price',

@@ -6,6 +6,24 @@
 <form [formGroup]="tireForm" (ngSubmit)="onFormSubmit()" autocomplete="false" novalidate #formDir="ngForm">
     <div mat-dialog-content>
         <div>
+          <div class="col-8">
+            <div class="form-group">
+              <label style="margin-top: 10px; font-size: 18px;">Select Brand name</label>
+              <select  (change)="typeChange($event)"  formControlName="brandName" style="margin: 10px; height: 32px;width: 120px; margin-top: 10px;">
+                <option *ngFor="let option of brandList" [value]="option.brandName">
+                  {{option.brandName}}
+                </option>
+              </select>
+              <div
+                *ngIf="tireForm.controls.brandName.invalid && (tireForm.controls.brandName.dirty || tireForm.controls.brandName.touched) && formDir.submitted">
+                <span class="text-danger"
+                  *ngIf="tireForm.controls.brandName.errors.required">
+                  Please enter brand name.
+                </span>
+
+              </div>
+            </div>
+          </div>
             <div class="col-8"  >
                 <div class="form-group">
                     <label style="margin-top: 10px; font-size: 18px;">Enter Size</label>

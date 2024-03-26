@@ -11,7 +11,7 @@ import { CoreService } from 'src/app/core/core.service';
   templateUrl: './withouttax-invoice.component.html',
   styleUrls: ['./withouttax-invoice.component.css']
 })
- 
+
 export class WithouttaxInvoiceComponent {
   // getTotalAmount: 550;
   customerName = "";
@@ -25,15 +25,37 @@ export class WithouttaxInvoiceComponent {
     customerName: 'John Doe',
   };
   productListing: any = [];
+  includeOTS: boolean = false;
+  ots = 4.5;
+  totalItems=0;
+  vehicleVIN:"";
+  invoiceNumber = 1;
+
   constructor(private location:Location, 
     private employeeService: EmployeeService,
     public router:Router,
     private snackbar: CoreService,) {
   }
+
   taxRate: number = 0.13; // Example GST rate (5%)
 
   getSubtotal(): number {
-    return this.productListing.items.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+    if(this.includeOTS){
+      let tiresTotal =  this.productListing.items.tires.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let rimsTotal = this.productListing.items.rims.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let subTotal = tiresTotal + rimsTotal + this.getOTS();
+      return subTotal;
+    }else{
+      let tiresTotal = this.productListing.items.tires.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let rimsTotal = this.productListing.items.rims.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let subtotal = tiresTotal + rimsTotal;
+      return subtotal;
+    }
+  }
+
+  getOTS(){
+    this.totalItems =  this.productListing.items.tires.reduce((subtotal:any, item:any) => subtotal + item.number_of_items, 0);
+    return this.totalItems * 4.5;
   }
 
   getTax(): number {
@@ -42,7 +64,9 @@ export class WithouttaxInvoiceComponent {
 
   ngOnInit(){
     this.productListing = this.location.getState();
-    console.log(this.location.getState());
+
+    console.log(this.productListing, "listing");
+    this.getInvoiceNumber();
   }
 
   generatePDF() {
@@ -72,7 +96,8 @@ export class WithouttaxInvoiceComponent {
   }
 
   updateTires(){
-    this.productListing.items.forEach( (element:any) => {
+    this.productListing.items.tires.forEach( (element:any) => {
+      console.log("this.productLiting", this.productListing);
       element.quantity = element.quantity - element.number_of_items;
       console.log("element", element);
       this.employeeService
@@ -80,7 +105,8 @@ export class WithouttaxInvoiceComponent {
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);
-          this.router.navigateByUrl('invoices');
+          this.userEntry();
+          this.router.navigateByUrl('product_screen');
         },
         error: (err) => {
           console.log(err);
@@ -88,4 +114,50 @@ export class WithouttaxInvoiceComponent {
       });
     })
     };
+
+    userEntry(){
+      const userObject = {
+        "customerName":this.customerName,
+        "address":this.address,
+        "phoneNumber": this.phoneNumber,
+        "productListing": this.productListing,
+        "additionalMessage": this.addionalMessage,
+        "vehicleVIN": this.vehicleVIN,
+        "totalOTS": this.getOTS(),
+        "totalAmount": this.getSubtotal(),
+        "invoiceNumber": this.invoiceNumber,
+        "invoiceType": "withoutTax"
+      }
+      this.employeeService
+      .addNewInvoice(userObject)
+      .subscribe({
+        next: (value) => {
+          // this.dialogRef.close(true);
+          this.router.navigateByUrl('product_screen');
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+
+    onVINChange(event: any){
+      this.vehicleVIN = event.target.value;
+    }
+
+    getInvoiceNumber(){
+      this.employeeService
+      .getInvoiceNumber()
+      .subscribe({
+        next: (value: any) => {
+          if(value.data.length > 0){
+            this.invoiceNumber = value.data[0].invoiceNumber; 
+            this.invoiceNumber = this.invoiceNumber + 1;
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
 }

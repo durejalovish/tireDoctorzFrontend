@@ -1,0 +1,93 @@
+<mat-toolbar color="primary">
+
+    <div [routerLink]="['']">TireDoctorz</div>
+    <span class="example-spacer"></span>
+    <!-- <button mat-raised-button (click)="addEmployeeForm()">
+        ADD RIMS
+    </button> -->
+</mat-toolbar>
+<!-- ! table component -->
+<div class="table-container">
+
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. john" #input>
+    </mat-form-field>
+
+    <div class="table-content">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="invoiceNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Number </th>
+                <td mat-cell *matCellDef="let row"> {{row.invoiceNumber}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="customerName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.customerName}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="invoiceType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Type </th>
+                <td mat-cell *matCellDef="let row"> {{row.invoiceType}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalAmount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+                <td mat-cell *matCellDef="let row"> {{row.totalAmount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalOTS">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total OTS </th>
+                <td mat-cell *matCellDef="let row"> {{row.totalOTS}} </td>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="button">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                <td mat-cell *matCellDef="let row">
+                     <button class="buttonDesign" (click) = "onButtonClick(row.productListing)" >Complete Invoice Details</button>
+                     </td>
+            </ng-container>
+
+          
+            <!-- <ng-container *ngFor="let column of dataSource"
+                [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+                <td mat-cell *matCellDef="let element; let i = index"> 
+                    {{element}} 
+                </td>
+            </ng-container> -->
+            <!-- <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="primary" (click)="editEmployeeForm(row)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="warn" (click)="deleteRims(row._id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+
+                </td>
+
+            </ng-container> -->
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>

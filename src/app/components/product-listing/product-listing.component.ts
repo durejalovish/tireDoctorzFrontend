@@ -16,6 +16,7 @@ import { CoreService } from 'src/app/core/core.service';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {RouterModule} from '@angular/router';
+import { MatTab, MatTabsModule } from '@angular/material/tabs';
 
 
 @Component({
@@ -38,14 +39,21 @@ import {RouterModule} from '@angular/router';
     ReactiveFormsModule,
     MatButtonModule,
     MatSnackBarModule,
-    FormsModule      
+    FormsModule,
+    MatTabsModule
   ],
   standalone: true,
 })
+
+// export interface productListing{
+//   tires: [], 
+//   rims: []
+// }
+
 export class ProductListingComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  productListing: any = [];
+  productListing: any = {tires:[], rims:[]};
   productForm: any = FormGroup;
   private sub: PushSubscription; 
   id:string;
@@ -65,17 +73,9 @@ export class ProductListingComponent {
       console.log("params", params);
       this.id = params['userId'];
     })
-    // let productData:any = localStorage.getItem("productListing");
-    // console.log("productData", productData);
-    // if(productData?.length !== 0 && productData !==null){
-    //   this.dataSource = new MatTableDataSource(productData);
-    //     this.dataSource.sort = this.sort;
-    //     this.dataSource.paginator = this.paginator;
-    // }else{
       this.getTiresList();
+      this.getRimsList();
     // }
-    
-    
   }
 
   routeWithoutTaxInvoice(): void {
@@ -97,6 +97,45 @@ export class ProductListingComponent {
   ];
 
   dataSource!: MatTableDataSource<any>;
+  dataSourceRims!: MatTableDataSource<any>;
+
+  applyFilterRims(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceRims.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceRims.paginator) {
+      this.dataSourceRims.paginator.firstPage();
+    }
+  }
+
+  getRimsList(): void {
+     this.employeeService.getAllRims().subscribe({
+       next: (res) => {
+       this.dataSourceRims = new MatTableDataSource(res.data);
+        this.dataSourceRims.sort = this.sort;
+        this.dataSourceRims.paginator = this.paginator;
+       },
+       error: (err: any) => {},
+     });
+  }
+  addToOrderRims(row:any) {
+    console.log(row, "row");
+   if(row.quantity < row.number_of_items){
+     this.snackbar.openSnackBar('Number of items should always be less than or equals to Quantity', 'Done');
+   }else if(row.number_of_items <= 0 || row.number_of_items == null){
+     this.snackbar.openSnackBar('Please input right number of items', 'Done');
+   }else{  
+     localStorage.clear();
+     const index = this.productListing['rims'].findIndex((element:any) => element._id == row._id);
+     if (index !== -1) {
+       this.productListing.rims.splice(index, 1);
+     }
+     this.productListing.rims.push(row);
+     this.snackbar.openSnackBar('Products has been added', 'Done');
+     console.log("products listing", this.productListing);
+
+   }
+ }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -126,11 +165,12 @@ export class ProductListingComponent {
       this.snackbar.openSnackBar('Please input right number of items', 'Done');
     }else{  
       localStorage.clear();
-      const index = this.productListing.findIndex((element:any) => element._id == row._id);
+      console.log(this.productListing);
+      const index = this.productListing.tires.findIndex((element:any) => element._id == row._id);
       if (index !== -1) {
-        this.productListing.splice(index, 1);
+        this.productListing.tires.splice(index, 1);
       }
-      this.productListing.push(row);
+      this.productListing.tires.push(row);
       this.snackbar.openSnackBar('Products has been added', 'Done');
       console.log("products listing", this.productListing);
 

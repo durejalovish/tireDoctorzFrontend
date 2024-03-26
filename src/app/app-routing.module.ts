@@ -9,8 +9,8 @@ import { ProductListingComponent } from './components/product-listing/product-li
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { WithouttaxInvoiceComponent } from './components/withouttax-invoice/withouttax-invoice.component';
 import { ProductScreenRimsComponent } from './components/product-screen-rims/product-screen-rims.component';
-import { TaxInvoiceRimsComponent } from './components/tax-invoice-rims/tax-invoice-rims.component';
-import { WithoutTaxInvoiceRimsComponent } from './components/without-tax-invoice-rims/without-tax-invoice-rims.component';
+import { UserSectionComponent } from './components/user-section/user-section.component';
+import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -18,13 +18,12 @@ const routes: Routes = [
   { path: 'rims', component: RimsListingComponent }, 
   { path: 'brand', component: BrandComponent }, 
   { path: 'invoices', component: InvoicesComponent },
-  { path: 'invoices/product_screen', component: ProductListingComponent },
+  { path: 'product_screen', component: ProductListingComponent },
   { path: 'invoices/product_screen_rims', component: ProductScreenRimsComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'withoutTax', component: WithouttaxInvoiceComponent },
-  { path: 'taxedRims', component: TaxInvoiceRimsComponent },
-  { path: 'withoutTaxRims', component: WithoutTaxInvoiceRimsComponent },
-
+  { path: 'users', component: UserSectionComponent },
+  { path: 'users/invoiceDetails', component: InvoiceDetailsComponent },
 ];
 
 @NgModule({

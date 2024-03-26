@@ -1,0 +1,42 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td,
+  th {
+    width: 25%;
+  }
+  
+  .table-container {
+    max-width: 1248px;
+    padding-top: 20px;
+    margin: 0 auto;
+  }
+
+  .buttonDesign{
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #3498db;
+    color: #ffffff;
+    background-color: #3498db;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .buttonDesign:hover {
+      background-color: #3498db;
+      color: #ffffff;
+  }

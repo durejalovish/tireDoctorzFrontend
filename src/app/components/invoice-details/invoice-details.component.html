@@ -1,0 +1,50 @@
+<h2 style="text-align: center;">Invoice Product Listing</h2>
+
+<table>
+    <thead>
+        <h2>Tires Listing</h2>
+        <tr>
+            <th>Vehicle Brand Name</th>
+            <th>Number of Items</th>
+            <th>Pattern</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Size</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let vehicle of productListing.tires">
+            <td>{{ vehicle.brandName }}</td>
+            <td>{{ vehicle.number_of_items }}</td>
+            <td>{{ vehicle.pattern }}</td>
+            <td>{{ vehicle.price }}</td>
+            <td>{{ vehicle.quantity }}</td>
+            <td>{{ vehicle.size }}</td>
+            <td>{{ vehicle.date }}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <h2>Rims Listing</h2>
+        <tr>
+            <th>Vehicle Brand Name</th>
+            <th>Number of Items</th>
+            <th>Pattern</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Size</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let vehicle of productListing.rims">
+            <td>{{ vehicle.brandName }}</td>
+            <td>{{ vehicle.number_of_items }}</td>
+            <td>{{ vehicle.pattern }}</td>
+            <td>{{ vehicle.price }}</td>
+            <td>{{ vehicle.quantity }}</td>
+            <td>{{ vehicle.size }}</td>
+            <td>{{ vehicle.date }}</td>
+        </tr>
+    </tbody>
+</table>

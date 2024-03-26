@@ -22,11 +22,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ProductScreenRimsComponent } from './components/product-screen-rims/product-screen-rims.component';
 import { WithoutTaxInvoiceRimsComponent } from './components/without-tax-invoice-rims/without-tax-invoice-rims.component';
 import { TaxInvoiceRimsComponent } from './components/tax-invoice-rims/tax-invoice-rims.component';
+import { UserSectionComponent } from './components/user-section/user-section.component';
+import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent , InvoicesComponent, CheckoutComponent, WithouttaxInvoiceComponent, WithoutTaxInvoiceRimsComponent, TaxInvoiceRimsComponent],
+  declarations: [AppComponent, DashboardComponent , InvoicesComponent, CheckoutComponent, WithouttaxInvoiceComponent, WithoutTaxInvoiceRimsComponent, TaxInvoiceRimsComponent, InvoiceDetailsComponent],
   imports: [
     MatToolbarModule,
     RouterModule,
@@ -35,9 +39,11 @@ import { TaxInvoiceRimsComponent } from './components/tax-invoice-rims/tax-invoi
     BrowserAnimationsModule,
     HeaderComponent,
     HttpClientModule,
+    MatTabsModule,
     FormsModule,
       ReactiveFormsModule,
       ToastrModule.forRoot(),
+
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -17,9 +17,9 @@
     <div class="table-content">
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                <td mat-cell *matCellDef="let row"> {{row._id}} </td>
+            <ng-container matColumnDef="brandName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.brandName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="size">

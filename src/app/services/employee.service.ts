@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 
 export class EmployeeService {
-   //apiUrl = "http://localhost:8081";
+  apiUrl = "http://localhost:8081";
   // apiUrl = "https://tiredoctorz-f57af3a8f34e.herokuapp.com";
-   apiUrl = "https://tiredoctorzbckend-d75275652f00.herokuapp.com";
+  // apiUrl = "https://tiredoctorzbckend-d75275652f00.herokuapp.com";
   constructor(private http: HttpClient) {}
 
   addTires(data: any): Observable<any> {
@@ -57,5 +57,17 @@ export class EmployeeService {
 
   updateBrand(data: any): Observable<unknown> {
     return this.http.post(`${this.apiUrl}/api/updateBrand`, data);
+  }
+
+  addNewInvoice(data: any): Observable<unknown> {
+    return this.http.post(`${this.apiUrl}/api/addNewInvoice`, data);
+  }
+
+  getInvoiceNumber(): Observable<unknown> {
+    return this.http.get(`${this.apiUrl}/api/getInvoiceNumber`);
+  }
+
+  getUsersInvoiceList(): Observable<unknown> {
+    return this.http.get(`${this.apiUrl}/api/getInvoicedUser`);
   }
 }

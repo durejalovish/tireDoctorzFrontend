@@ -21,6 +21,9 @@ export class CheckoutComponent {
   ots = 4.5;
   totalItems=0;
   currentDate = new Date();
+  includeOTS: boolean = true;
+  vehicleVIN:"";
+  invoiceNumber = 1;
   invoiceData = {
     invoiceNumber: 'INV-001',
     date: '2023-01-01',
@@ -35,13 +38,21 @@ export class CheckoutComponent {
   taxRate: number = 0.13; // Example GST rate (5%)
 
   getSubtotal(): number {
-    let total =  this.productListing.items.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
-    let subTotal = total + this.getOTS();
-    return subTotal;
+    if(this.includeOTS){
+      let tiresTotal =  this.productListing.items.tires.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let rimsTotal = this.productListing.items.rims.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let subTotal = tiresTotal + rimsTotal + this.getOTS();
+      return subTotal;
+  }else{
+    let tiresTotal = this.productListing.items.tires.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let rimsTotal = this.productListing.items.rims.reduce((subtotal:any, item:any) => subtotal + item.number_of_items * item.price, 0);
+      let subtotal = tiresTotal + rimsTotal;
+      return subtotal;
+  }
   }
 
   getOTS(){
-    this.totalItems =  this.productListing.items.reduce((subtotal:any, item:any) => subtotal + item.number_of_items, 0);
+    this.totalItems =  this.productListing.items.tires.reduce((subtotal:any, item:any) => subtotal + item.number_of_items, 0);
     return this.totalItems * 4.5;
   }
 
@@ -51,7 +62,7 @@ export class CheckoutComponent {
 
   ngOnInit(){
     this.productListing = this.location.getState();
-    console.log(this.location.getState());
+    this.getInvoiceNumber();
   }
 
   generatePDF() {
@@ -81,11 +92,51 @@ export class CheckoutComponent {
   }
 
   updateTires(){
-    this.productListing.items.forEach( (element:any) => {
+    this.productListing.items.tires.forEach( (element:any) => {
       element.quantity = element.quantity - element.number_of_items;
-      console.log("element", element);
       this.employeeService
       .updateTires(element)
+      .subscribe({
+        next: (value) => {
+          this.userEntry();
+          // this.dialogRef.close(true);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    })
+    this.productListing.items.rims.forEach( (element:any) => {
+      element.quantity = element.quantity - element.number_of_items;
+      this.employeeService
+      .updateRims(element)
+      .subscribe({
+        next: (value) => {
+          // this.dialogRef.close(true);
+          this.router.navigateByUrl('invoices/product_screen');
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    })
+    };
+
+    userEntry(){
+      const userObject = {
+        "customerName":this.customerName,
+        "address":this.address,
+        "phoneNumber": this.phoneNumber,
+        "productListing": this.productListing,
+        "additionalMessage": this.addionalMessage,
+        "vehicleVIN": this.vehicleVIN,
+        "totalOTS": this.getOTS(),
+        "totalAmount": this.getSubtotal(),
+        "invoiceNumber": this.invoiceNumber,
+        "invoiceType": "Taxed Invoice"
+      }
+      this.employeeService
+      .addNewInvoice(userObject)
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);
@@ -95,6 +146,25 @@ export class CheckoutComponent {
           console.log(err);
         },
       });
-    })
-    };
+    }
+
+    onVINChange(event: any){
+      this.vehicleVIN = event.target.value;
+    }
+
+    getInvoiceNumber(){
+      this.employeeService
+      .getInvoiceNumber()
+      .subscribe({
+        next: (value: any) => {
+          if(value.data.length > 0){
+            this.invoiceNumber = value.data[0].invoiceNumber; 
+            this.invoiceNumber = this.invoiceNumber + 1;
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
 }

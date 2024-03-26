@@ -34,13 +34,7 @@ export class AddEditRimsComponent implements OnInit {
 
   tireForm: any = FormGroup;
   typeSelected = "";
-  EducationList: string[] = [
-    'Matric',
-    'Diploma',
-    'Intermediate',
-    'Graduate',
-    'Post Graduate',
-  ];
+  brandList:any  = [];
 
   constructor(
     private fb: FormBuilder,
@@ -52,6 +46,7 @@ export class AddEditRimsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tireForm = this.fb.group({
+      brandName: new FormControl("", [Validators.required]),
       size: new FormControl(null, [Validators.required]),
       pattern: new FormControl(null, [Validators.required]),
       price: new FormControl(null, [Validators.required]),
@@ -59,18 +54,28 @@ export class AddEditRimsComponent implements OnInit {
     });
 
     this.tireForm.patchValue(this.data);
+    this.getBrandList();
+
   }
 
   typeChange(event: any) {
     this.typeSelected = event.target.value
   }
 
+  getBrandList(): void {
+    this.employeeService.getBrands().subscribe({
+      next: (res) => {
+      this.brandList = res.data;
+      },
+      error: (err: any) => {},
+    });
+ }
+
   onFormSubmit() {
     console.log(this.data);
     if (this.tireForm.valid) {
       if (this.data) {
         this.tireForm.value["_id"] = this.data._id;
-        console.log(this.tireForm.value, "biwbiewrgbeirugb");
         this.employeeService
           .updateRims(this.tireForm.value)
           .subscribe({
@@ -84,7 +89,7 @@ export class AddEditRimsComponent implements OnInit {
       } else {
         this.employeeService.addRims(this.tireForm.value).subscribe({
           next: (val: any) => {
-            this.snackbar.openSnackBar('Employee Added Successfully', 'done');
+            this.snackbar.openSnackBar('Rims Added Successfully', 'done');
 
             this.dialogRef.close(true);
           },
