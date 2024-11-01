@@ -22,6 +22,12 @@
    No
   <input class="form-check-input" type="radio"
    name="gob" [(ngModel)]="includeOTS" [value]="false" />
+   <h3 class="setHeight" style="margin-top: 10px;">Payment Credit Card</h3>Yes
+   <input class="form-check-input" type="radio"
+    name="credit card" [(ngModel)]="paymentCreditCard" [value]="true" (change)="onCreditCardChanges(true)"/>
+    No
+   <input class="form-check-input" type="radio"
+    name="credit card" [(ngModel)]="paymentCreditCard" [value]="false" (change)="onCreditCardChanges(false)" />
 </div>
 
 <div id="invoice-container" class="invoice-container">
@@ -104,6 +110,8 @@
       <div>3. Physical or any damage on sidewall will not be covered.</div>
       <div>4. Please check your lock key after getting your car back from service. </div>
       <div>5. Comeback after 100km of service for re-torque.</div>
+      <div>6. A surcharge of 2.6% will be applied to all transactions made using a credit card</div>
+
     </div>
   </div>
   <div class="row" style="margin-bottom: 25px;">

@@ -22,6 +22,7 @@ export class CheckoutComponent {
   totalItems=0;
   currentDate = new Date();
   includeOTS: boolean = true;
+  paymentCreditCard: boolean = false;
   vehicleVIN:"";
   invoiceNumber = 1;
   invoiceData = {
@@ -72,7 +73,12 @@ export class CheckoutComponent {
   }
 
   getTotalAmount(): number {
-    return this.getSubtotal() + this.getTax();
+    if(this.paymentCreditCard){
+      let creditCardCharges = ((this.getSubtotal() + + this.getTax()) * 2.6) / 100;
+      return this.getSubtotal() + this.getTax() + creditCardCharges;
+    }else{
+      return this.getSubtotal() + this.getTax();
+    }
   }
 
   onNameChange(event: any){
@@ -90,10 +96,10 @@ export class CheckoutComponent {
   onMessageChange(event: any){
     this.addionalMessage = event.target.value;
   }
-
   updateTires(){
+    //console.log(this.productListing.items.tires, "tires");
     this.productListing.items.tires.forEach( (element:any) => {
-      element.quantity = element.quantity - element.number_of_items;
+      element.quantity =element.quantity - element.number_of_items;
       this.employeeService
       .updateTires(element)
       .subscribe({
@@ -106,6 +112,7 @@ export class CheckoutComponent {
         },
       });
     })
+    console.log(this.productListing, "print the product listing here");
     this.productListing.items.rims.forEach( (element:any) => {
       element.quantity = element.quantity - element.number_of_items;
       this.employeeService
@@ -113,7 +120,7 @@ export class CheckoutComponent {
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);
-          this.router.navigateByUrl('invoices/product_screen');
+          this.userEntry();
         },
         error: (err) => {
           console.log(err);
@@ -135,12 +142,13 @@ export class CheckoutComponent {
         "invoiceNumber": this.invoiceNumber,
         "invoiceType": "Taxed Invoice"
       }
+     // console.log(userObject, "userObject");
       this.employeeService
       .addNewInvoice(userObject)
       .subscribe({
         next: (value) => {
           // this.dialogRef.close(true);
-          this.router.navigateByUrl('invoices');
+          this.router.navigateByUrl('');
         },
         error: (err) => {
           console.log(err);
@@ -166,5 +174,15 @@ export class CheckoutComponent {
           console.log(err);
         },
       });
+    }
+
+    onCreditCardChanges(value:any){
+      console.log(value, "value");
+      this.paymentCreditCard = value;
+    }
+    
+    includeChangeOTS(value:any){
+      console.log(value, "value");
+      this.includeOTS = value
     }
 }
