@@ -25,12 +25,13 @@ import { TaxInvoiceRimsComponent } from './components/tax-invoice-rims/tax-invoi
 import { UserSectionComponent } from './components/user-section/user-section.component';
 import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { LoginComponent } from './components/login/login.component';
 
 
 
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent , InvoicesComponent, CheckoutComponent, WithouttaxInvoiceComponent, WithoutTaxInvoiceRimsComponent, TaxInvoiceRimsComponent, InvoiceDetailsComponent],
+  declarations: [AppComponent, DashboardComponent , LoginComponent,InvoicesComponent, CheckoutComponent, WithouttaxInvoiceComponent, WithoutTaxInvoiceRimsComponent, TaxInvoiceRimsComponent, InvoiceDetailsComponent],
   imports: [
     MatToolbarModule,
     RouterModule,

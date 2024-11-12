@@ -1,0 +1,36 @@
+<mat-toolbar color="primary">
+
+    <div [routerLink]="['']">TireDoctorz</div>
+    <span class="example-spacer"></span>
+    
+</mat-toolbar>
+<br />
+<br />
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h2>Login</h2>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" />
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" />
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">
+            Password must be at least 6 characters.
+          </small>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </div>
+  

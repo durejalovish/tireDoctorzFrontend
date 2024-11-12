@@ -11,9 +11,11 @@ import { WithouttaxInvoiceComponent } from './components/withouttax-invoice/with
 import { ProductScreenRimsComponent } from './components/product-screen-rims/product-screen-rims.component';
 import { UserSectionComponent } from './components/user-section/user-section.component';
 import { InvoiceDetailsComponent } from './components/invoice-details/invoice-details.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'tires', component: HeaderComponent },
   { path: 'rims', component: RimsListingComponent }, 
   { path: 'brand', component: BrandComponent }, 
