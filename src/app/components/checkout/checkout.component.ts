@@ -138,7 +138,7 @@ export class CheckoutComponent {
         "additionalMessage": this.addionalMessage,
         "vehicleVIN": this.vehicleVIN,
         "totalOTS": this.getOTS(),
-        "totalAmount": this.getSubtotal(),
+        "totalAmount": this.getTotalAmount(),
         "invoiceNumber": this.invoiceNumber,
         "invoiceType": "Taxed Invoice"
       }

@@ -16,15 +16,15 @@ import { LoginComponent } from './components/login/login.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'tires', component: HeaderComponent },
-  { path: 'rims', component: RimsListingComponent }, 
-  { path: 'brand', component: BrandComponent }, 
-  { path: 'invoices', component: InvoicesComponent },
-  { path: 'product_screen', component: ProductListingComponent },
-  { path: 'invoices/product_screen_rims', component: ProductScreenRimsComponent },
+  { path: 'dashboard/tires', component: HeaderComponent },
+  { path: 'dashboard/rims', component: RimsListingComponent }, 
+  { path: 'dashboard/brand', component: BrandComponent }, 
+  { path: 'dashboard/invoices', component: InvoicesComponent },
+  { path: 'dashboard/product_screen', component: ProductListingComponent },
+  { path: 'dashboard/invoices/product_screen_rims', component: ProductScreenRimsComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'withoutTax', component: WithouttaxInvoiceComponent },
-  { path: 'users', component: UserSectionComponent },
+  { path: 'dashboard/withoutTax', component: WithouttaxInvoiceComponent },
+  { path: 'dashboard/users', component: UserSectionComponent },
   { path: 'users/invoiceDetails', component: InvoiceDetailsComponent },
 ];
 
