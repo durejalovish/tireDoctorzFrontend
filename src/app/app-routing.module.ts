@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'dashboard/product_screen', component: ProductListingComponent },
   { path: 'dashboard/invoices/product_screen_rims', component: ProductScreenRimsComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'dashboard/withoutTax', component: WithouttaxInvoiceComponent },
+  { path: 'withoutTax', component: WithouttaxInvoiceComponent },
   { path: 'dashboard/users', component: UserSectionComponent },
   { path: 'users/invoiceDetails', component: InvoiceDetailsComponent },
 ];
